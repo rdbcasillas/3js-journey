@@ -12,7 +12,7 @@
         id="myRange"
         @input="onChg($event)"
       />
-      <br>
+      <br />
       <label for="myRot">X Rot </label>
       <input
         type="range"
@@ -63,14 +63,35 @@ export default {
       const geometry = new THREE.BoxGeometry(2, 2, 2);
       const material = new THREE.MeshBasicMaterial({ color: "lightblue" });
       const mesh = new THREE.Mesh(geometry, material);
-      mesh.position.x = this.x;
-      mesh.position.y = this.y;
+      //   mesh.position.x = this.x;
+      //   mesh.position.y = this.y;
 
-      mesh.scale.x = this.xscale 
-      mesh.scale.y = this.yscale 
-      mesh.rotation.x = this.xrot
-      mesh.rotation.y = this.yrot
-      scene.add(mesh);
+      //   mesh.scale.x = this.xscale
+      //   mesh.scale.y = this.yscale
+      //   mesh.rotation.x = this.xrot
+      //   mesh.rotation.y = this.yrot
+      //scene.add(mesh);
+      const group = new THREE.Group();
+      scene.add(group);
+      const cube1 = new THREE.Mesh(
+        new THREE.BoxGeometry(1, 1, 1),
+        new THREE.MeshBasicMaterial({ color: "green" })
+      );
+      group.add(cube1);
+      const cube2 = new THREE.Mesh(
+        new THREE.BoxGeometry(1, 1, 1),
+        new THREE.MeshBasicMaterial({ color: "red" })
+      );
+      group.add(cube2);
+      cube2.position.x = 2;
+      group.position.x = this.x;
+      group.position.y = this.y;
+
+      group.scale.x = this.xscale;
+      group.scale.y = this.yscale;
+      group.rotation.x = this.xrot;
+      group.rotation.y = this.yrot;
+
       //Camera
       const camera = new THREE.PerspectiveCamera(75, this.width / this.height);
       camera.position.x = 1;
