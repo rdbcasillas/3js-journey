@@ -33,11 +33,17 @@ export default {
         star.position.set(x,y,z)
         scene.add(star)
     },
+    addTorus(){
+        let torusgem = new THREE.TorusGeometry( 3, 1, 8, 100 );
+        let torusmat = new THREE.MeshBasicMaterial( { color: 'orange',wireframe: true } );
+        let torus = new THREE.Mesh( torusgem, torusmat );
+        scene.add(torus); 
+    },
     makeScene() {
       const canvas = document.querySelector('.webgl')
       this.canv = canvas
-      const geometry = new THREE.BoxGeometry(2, 2, 2);
-      const material = new THREE.MeshBasicMaterial({ color: "green" });
+      const geometry = new THREE.BoxGeometry(2, 2, 2,2,2,2);
+      const material = new THREE.MeshBasicMaterial({ color: "green", wireframe: false});
       const mesh = new THREE.Mesh(geometry, material);
 
       scene.add(mesh);
@@ -45,7 +51,7 @@ export default {
       //Camera
       this.camera = new THREE.PerspectiveCamera(75, this.width / this.height);
       this.camera.position.x = 1;
-      this.camera.position.z = 5;
+      this.camera.position.z = 10;
 
       //orbit control for mouse interaction
       const controls = new OrbitControls(this.camera, canvas)
@@ -67,13 +73,13 @@ export default {
       function animate() {
 
         const elapsedTime = clock.getElapsedTime();
-        //  mesh.rotation.x += 0.01 * Math.cos(elapsedTime);
-        //  mesh.rotation.y += 0.01 * Math.sin(elapsedTime);
-        // gsap.to(mesh.position, {
-        //   duration: 1,
-        //   delay: 1,
-        //   x: Math.sin(elapsedTime),
-        // });
+          mesh.rotation.x += 0.01 * Math.cos(elapsedTime);
+          mesh.rotation.z += 0.09 * Math.sin(elapsedTime);
+        gsap.to(mesh.position, {
+          duration: 1,
+          delay: 1,
+          z: Math.sin(elapsedTime),
+        });
         // gsap.to(mesh.position, {
         //   duration: 1,
         //   delay: 1,
@@ -115,6 +121,7 @@ export default {
         }
     })
     Array(300).fill().forEach(this.addStar);
+    this.addTorus();
     this.makeScene();
   },
 };
